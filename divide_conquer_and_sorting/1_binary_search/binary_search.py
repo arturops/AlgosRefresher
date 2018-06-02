@@ -1,10 +1,21 @@
 # Uses python3
 import sys
 
-def binary_search(a, x):
-    left, right = 0, len(a)
+#input example
+#5 1 2 3 4 5
+#5 1 2 3 4 5
 
-    half = (left + right)//2
+def binary_search_recursive(a, l, r, x):
+    """
+    Recursive binary search
+    a: sorted array
+    l: most left index of array (in each recursion)
+    r: most right index of array (in each recursion)
+    x: target value (value to search)
+    """
+    left, right = l, r
+
+    half = left + (right - left)//2
     #print('target: {}'.format(x))
     #print('input array: {}'.format(a))
     #print('half: {}'.format(half))
@@ -14,16 +25,35 @@ def binary_search(a, x):
         #print('result: {}'.format(half))
         #print('*********************************************')
         return half
-    elif half <= 0:
-        #print('result: -1')
-        #print('*********************************************')
-        return -1
     elif a[half] < x:
-        b = a[(half+1):(right-1)]
-        b.append(a[-1])
-        return binary_search(b,x)
+        return binary_search_recursive(a, half+1, right, x)
     elif a[half] > x:
-        return binary_search(a[left:half],x)
+        return binary_search_recursive(a, left, half-1, x)
+
+    return -1
+
+def binary_search_iter(a, x):
+    """
+    Iterative binary search
+    a: sorted array
+    x: target value (value to search)
+    Uses less stack (memory space) than the recursive approach
+    """
+
+    left, right = 0, len(a)-1
+
+    while left <= right:
+    
+        half = left + (right - left)//2
+
+        if a[half] == x:
+            return half
+        elif a[half] < x:
+            left = half + 1
+        elif a[half] > x :
+            right = half - 1
+
+    return -1
 
 def linear_search(a, x):
     for i in range(len(a)):
@@ -38,5 +68,8 @@ if __name__ == '__main__':
     m = data[n + 1]
     a = data[1 : n + 1]
     for x in data[n + 2:]:
-        # replace with the call to binary_search when implemented
-        print(binary_search(a, x), end = ' ')
+        print(binary_search_iter(a, x), end = ' ')
+    
+    #print()
+    #for x in data[n + 2:]:
+    #    print(binary_search_recursive(a,0,len(a)-1,x), end = ' ')
