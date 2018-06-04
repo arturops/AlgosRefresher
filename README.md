@@ -1,4 +1,4 @@
-# Algorithms Refresher Practice of some algorithms
+# Algorithms Refresher Practice
 
  This repo contains some of algrithms and exercises that are the foundations of computer science.
 
